@@ -19,5 +19,10 @@ setInterval(function(){
     }
     flag=!flag;
 },2000);*/
+
+$.get('/1')
+    // .then(response => response.json())
+    .then(json => console.log(json))
+
 var box=document.getElementById('box');
 box.innerHTML='<div class="'+base.box+'">sadf</div>';
