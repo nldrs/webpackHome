@@ -22,12 +22,12 @@ const config = {
     devtool: "cheap-module-source-map",
     devServer: {
         compress: true,
-        port: 9000,
+        port: 7000,
         overlay:true,
         historyApiFallback: true,
         hot: true,
         // hotOnly:true,
-        proxy: {
+       /* proxy: {
             '/': {
                 target: 'https://jsonplaceholder.typicode.com',
                 changeOrigin: true,
@@ -36,7 +36,7 @@ const config = {
                     '^/1': '/posts/1'
                 }
             }
-        }
+        }*/
     },
     resolve: {
         alias: {
@@ -47,48 +47,49 @@ const config = {
         rules: [
             {
                 test: /\.less$/,
-                //use:textWp.extract({
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            insertInto: '#app',
-                            // singleton:true,
-                            sourceMap: true,
-                            transform: './css.transform.js'
-                        }
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true,
-                            //minimize:true,
-                            //modules:true,
-                            //localIdentName:'[path][name]__[local]--[hash:base64:5]'
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            sourceMap: true,
-                            plugins: [
-                                //require('autoprefixer')(),
-                                postSprite({
-                                    spritePath: '/assets/imgs/'
-                                }),
-                                cssN()
-                            ]
-                        }
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            sourceMap: true
-                        }
+                use:textWp.extract({
+                fallback: {
+                    loader: 'style-loader',
+                    options: {
+                        insertInto: '#app',
+                        // singleton:true,
+                        sourceMap: true,
+                        transform: './css.transform.js'
                     }
-                ]
+                },
+            use: [
+            {
+                loader: 'css-loader',
+                options: {
+                    sourceMap: true,
+                    //minimize:true,
+                    //modules:true,
+                    //localIdentName:'[path][name]__[local]--[hash:base64:5]'
+                }
             },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    ident: 'postcss',
+                    sourceMap: true,
+                    plugins: [
+                        //require('autoprefixer')(),
+                        postSprite({
+                            spritePath: '/assets/imgs/'
+                        }),
+                        cssN()
+                    ]
+                }
+            },
+            {
+                loader: 'less-loader',
+                options: {
+                    sourceMap: true
+                }
+            }
+                ]
+            })},
+
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -99,13 +100,14 @@ const config = {
                             presets: ['env'],
                             plugins: ['lodash']
                         }
-                    },
+                    }
+                    /*,
                     {
                         loader:'eslint-loader',
                         options:{
                             formatter:require("eslint-friendly-formatter")
                         }
-                    }
+                    }*/
                 ]
             },
             {
